@@ -53,59 +53,52 @@ class MyLinkedList<T> implements List {
             tmp.right = newLastNode;
     }
 
-
-    private T pop() {
-        T value = head.value;
+    public void clear() {
         head = null;
         tail = null;
         size = 0;
-        return value;
     }
 
 
-    private T removeLeft() {
-        Node<T> tmp = head;
-        size--;
-        Node<T> newHead = head.right;
-        newHead.left = null;
-        head = newHead;
-        return tmp.value;
-    }
-
-    private T removeMiddle(Node<T> current) {
-        Node<T> previous = current.left;
-        Node<T> next = current.right;
-        size--;
-        previous.right = next;
-        next.left = previous;
-        return current.value;
-    }
-
-    private T removeRight() {
-        Node<T> tmp = tail;
-        size--;
-        Node<T> newLast = tail.left;
-        newLast.right = null;
-        tail = newLast;
-        return tmp.value;
-    }
-
-    public T removeByIndex(int index) {
-        Node<T> maybeNode = getNodeByIndex(index);
-        if (maybeNode != null) {
+    public T deleteByIndex(int index) {
+        Node<T> current = getNodeByIndex(index);
+        if (current != null) {
             if (index == 0) {
                 if (size != 1)
-                    return removeLeft();
-                else
-                    return pop();
+                {
+                    Node<T> tmp = head;
+                    size--;
+                    Node<T> newHead = head.right;
+                    newHead.left = null;
+                    head = newHead;
+                    return tmp.value;
+                }
+                else {
+                    clear();
+                    return null;
+                }
             }
             if (index == size - 1) {
                 if (size != 1)
-                    return removeRight();
-                else
-                    return pop();
+                {
+                    Node<T> tmp = tail;
+                    size--;
+                    Node<T> newLast = tail.left;
+                    newLast.right = null;
+                    tail = newLast;
+                    return tmp.value;
+                }
+                else {
+                    clear();
+                    return null;
+                }
             }
-            return removeMiddle(maybeNode);
+            Node<T> previous = current.left;
+            Node<T> next = current.right;
+            size--;
+            previous.right = next;
+            next.left = previous;
+            return current.value;
         } else
             throw new NoSuchElementException("List is empty");
     }
@@ -148,6 +141,7 @@ class MyLinkedList<T> implements List {
         } else
             throw new NoSuchElementException("Index larger then List size");
     }
+
     public Object get(int index) {
         Node<T> maybeCurrent = getNodeByIndex(index);
         if (maybeCurrent != null)
@@ -185,11 +179,6 @@ class MyLinkedList<T> implements List {
     @Override
     public boolean addAll(int index, Collection c) {
         return false;
-    }
-
-    @Override
-    public void clear() {
-
     }
 
 
@@ -253,7 +242,6 @@ class MyLinkedList<T> implements List {
     public Object[] toArray(Object[] a) {
         return new Object[0];
     }
-
 
 
 }
