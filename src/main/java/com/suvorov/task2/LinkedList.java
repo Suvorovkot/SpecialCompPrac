@@ -1,9 +1,6 @@
 package main.java.com.suvorov.task2;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 
 class MyLinkedList<T> implements List {
@@ -43,6 +40,7 @@ class MyLinkedList<T> implements List {
      * Getting by index
      * Adding by index
      */
+
     public void addLast(T value) {
         Node<T> newLastNode = new Node<T>(value, tail, null);
         Node<T> tmp = tail;
@@ -56,23 +54,113 @@ class MyLinkedList<T> implements List {
     }
 
 
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
+    private T pop() {
+        T value = head.value;
+        head = null;
+        tail = null;
+        size = 0;
+        return value;
     }
 
-    @Override
+
+    private T removeLeft() {
+        Node<T> tmp = head;
+        size--;
+        Node<T> newHead = head.right;
+        newHead.left = null;
+        head = newHead;
+        return tmp.value;
+    }
+
+    private T removeMiddle(Node<T> current) {
+        Node<T> previous = current.left;
+        Node<T> next = current.right;
+        size--;
+        previous.right = next;
+        next.left = previous;
+        return current.value;
+    }
+
+    private T removeRight() {
+        Node<T> tmp = tail;
+        size--;
+        Node<T> newLast = tail.left;
+        newLast.right = null;
+        tail = newLast;
+        return tmp.value;
+    }
+
+    public T removeByIndex(int index) {
+        Node<T> maybeNode = getNodeByIndex(index);
+        if (maybeNode != null) {
+            if (index == 0) {
+                if (size != 1)
+                    return removeLeft();
+                else
+                    return pop();
+            }
+            if (index == size - 1) {
+                if (size != 1)
+                    return removeRight();
+                else
+                    return pop();
+            }
+            return removeMiddle(maybeNode);
+        } else
+            throw new NoSuchElementException("List is empty");
+    }
+
+
     public boolean contains(Object o) {
         if (o == null)
             throw new IllegalArgumentException("Null argument");
         else {
-            for (Node<T> current = head; current != null; current = current.right) {
-                if (current.value.equals(o))
+            for (Node<T> cur = head; cur != null; cur = cur.right) {
+                if (cur.value.equals(o))
                     return true;
             }
         }
         return false;
     }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    private Node<T> getNodeByIndex(int index) {
+        int iterationIndex = 0;
+
+        if (index <= size - 1) {
+            if (index > size / 2) {
+                Node<T> current = tail;
+                iterationIndex = size - 1;
+                for (; iterationIndex != index; --iterationIndex) {
+                    current = current.left;
+                }
+                return current;
+            } else {
+                Node<T> current = head;
+                for (; iterationIndex != index; ++iterationIndex) {
+                    current = current.right;
+                }
+                return current;
+            }
+        } else
+            throw new NoSuchElementException("Index larger then List size");
+    }
+    public Object get(int index) {
+        Node<T> maybeCurrent = getNodeByIndex(index);
+        if (maybeCurrent != null)
+            return maybeCurrent.value;
+        else
+            throw new NoSuchElementException("List is empty");
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
 
     @Override
     public Iterator iterator() {
@@ -86,11 +174,6 @@ class MyLinkedList<T> implements List {
 
     @Override
     public boolean add(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
         return false;
     }
 
@@ -109,10 +192,6 @@ class MyLinkedList<T> implements List {
 
     }
 
-    @Override
-    public Object get(int index) {
-        return null;
-    }
 
     @Override
     public Object set(int index, Object element) {
@@ -128,6 +207,7 @@ class MyLinkedList<T> implements List {
     public Object remove(int index) {
         return null;
     }
+
 
     @Override
     public int indexOf(Object o) {
