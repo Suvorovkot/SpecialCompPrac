@@ -35,8 +35,8 @@ class MyLinkedList<T> implements List {
      * This list should implement:
      * Adding to the end of list
      * Deleting by index
-     * Content
-     * Emptiness
+     * Content check
+     * Emptiness check
      * Getting by index
      * (In addition) Adding by index
      */
