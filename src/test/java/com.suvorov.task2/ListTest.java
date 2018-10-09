@@ -1,4 +1,4 @@
-package main.java.com.suvorov.task2;
+package com.suvorov.task2;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +11,7 @@ class ListTest {
 
     @Test
     void addingAndCreatingTest() {
+
         MyLinkedList<Integer> testList = new MyLinkedList<>();
         Integer[] begining = {1, 2};
         testList.create(begining);
