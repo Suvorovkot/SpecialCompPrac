@@ -23,12 +23,11 @@ class ListTest {
     @Test
     void addingInPositionTest() {
         MyLinkedList<Integer> testList = new MyLinkedList<>();
-        Integer[] begining = {1, 2};
+        Integer[] begining = {1, 2, 4, 5};
         testList.create(begining);
-        MyLinkedList<Integer> expectedList = new MyLinkedList<>();
-        testList.addPos(3,1);
-        System.out.println(testList.get(1));
-        //assertEquals(testList.get(1), expectedList.get(1));
+        int pos = 2;
+        testList.addPos(3,pos);
+        assertEquals(testList.get(pos), 3);
     }
 
     @Test
