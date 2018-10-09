@@ -38,7 +38,7 @@ class MyLinkedList<T> implements List {
      * Content
      * Emptiness
      * Getting by index
-     * Adding by index
+     * (In addition) Adding by index
      */
 
     public void addLast(T value) {
@@ -53,6 +53,23 @@ class MyLinkedList<T> implements List {
             tmp.right = newLastNode;
     }
 
+
+    public void create(T[] values) {
+        Node<T> newFirstNode = new Node<T>(values[0], null, head);
+        Node<T> tmp = head;
+
+        head = newFirstNode;
+        size++;
+        if (tmp == null)
+            tail = newFirstNode;
+        else
+            tmp.left = newFirstNode;
+        for(int i = 1; i < values.length; i++){
+            addLast(values[i]);
+        }
+    }
+
+
     public void clear() {
         head = null;
         tail = null;
@@ -61,44 +78,46 @@ class MyLinkedList<T> implements List {
 
 
     public T deleteByIndex(int index) {
-        Node<T> current = getNodeByIndex(index);
-        if (current != null) {
+        Node<T> cur = getNodeByIndex(index);
+        if (cur != null) {
             if (index == 0) {
                 if (size != 1)
                 {
                     Node<T> tmp = head;
-                    size--;
                     Node<T> newHead = head.right;
                     newHead.left = null;
                     head = newHead;
+                    size--;
                     return tmp.value;
                 }
                 else {
+                    T value = head.value;
                     clear();
-                    return null;
+                    return value;
                 }
             }
             if (index == size - 1) {
                 if (size != 1)
                 {
                     Node<T> tmp = tail;
-                    size--;
                     Node<T> newLast = tail.left;
                     newLast.right = null;
                     tail = newLast;
+                    size--;
                     return tmp.value;
                 }
                 else {
+                    T value = head.value;
                     clear();
-                    return null;
+                    return value;
                 }
             }
-            Node<T> previous = current.left;
-            Node<T> next = current.right;
-            size--;
+            Node<T> previous = cur.left;
+            Node<T> next = cur.right;
             previous.right = next;
             next.left = previous;
-            return current.value;
+            size--;
+            return cur.value;
         } else
             throw new NoSuchElementException("List is empty");
     }
@@ -115,6 +134,20 @@ class MyLinkedList<T> implements List {
         }
         return false;
     }
+    public int indexOf(Object o) {
+        if (contains(o)){
+            int ind = 0;
+            for (Node<T> cur = head; cur != null; cur = cur.right) {
+                ind++;
+                if (cur.value.equals(o))
+                    return ind; 
+            } 
+        }else{
+            throw new IllegalArgumentException("No such element");
+        }
+        return 0;
+
+    }
 
     public boolean isEmpty() {
         return size == 0;
@@ -125,30 +158,45 @@ class MyLinkedList<T> implements List {
 
         if (index <= size - 1) {
             if (index > size / 2) {
-                Node<T> current = tail;
+                Node<T> cur = tail;
                 iterationIndex = size - 1;
-                for (; iterationIndex != index; --iterationIndex) {
-                    current = current.left;
+                for (; iterationIndex != index; iterationIndex--) {
+                    cur = cur.left;
                 }
-                return current;
+                return cur;
             } else {
-                Node<T> current = head;
-                for (; iterationIndex != index; ++iterationIndex) {
-                    current = current.right;
+                Node<T> cur = head;
+                for (; iterationIndex != index; iterationIndex++) {
+                    cur = cur.right;
                 }
-                return current;
+                return cur;
             }
         } else
-            throw new NoSuchElementException("Index larger then List size");
+            throw new NoSuchElementException("Out of bounds");
     }
 
     public Object get(int index) {
-        Node<T> maybeCurrent = getNodeByIndex(index);
-        if (maybeCurrent != null)
-            return maybeCurrent.value;
+        Node<T> maybecur = getNodeByIndex(index);
+        if (maybecur != null)
+            return maybecur.value;
         else
             throw new NoSuchElementException("List is empty");
     }
+
+
+    public void addPos(T value, int index) {
+        Node<T> newLastNode = new Node<T>(value, tail, null);
+        Node<T> tmp = tail;
+
+        tail = newLastNode;
+        ++size;
+        if (tmp == null)
+            head = newLastNode;
+        else
+            tmp.right = newLastNode;
+    }
+
+
 
     @Override
     public boolean remove(Object o) {
@@ -198,10 +246,6 @@ class MyLinkedList<T> implements List {
     }
 
 
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
 
     @Override
     public int lastIndexOf(Object o) {
