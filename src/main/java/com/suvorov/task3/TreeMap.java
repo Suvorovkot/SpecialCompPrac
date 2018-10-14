@@ -40,53 +40,53 @@ public class TreeMap<K extends Comparable<K>, V> implements java.util.Map {
 
 
     @Override
-    public boolean containsKey(Object key) {
-        return false;
+    public boolean containsKey(Object key)  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public boolean containsValue(Object value) {
-        return false;
+    public boolean containsValue(Object value)  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Object get(Object key) {
-        return null;
+    public Object get(Object key)  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Object put(Object key, Object value) {
-        return null;
+    public Object put(Object key, Object value)  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Object remove(Object key) {
-        return null;
+    public Object remove(Object key)  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
 
     @Override
-    public void putAll(Map m) {
-
+    public void putAll(Map m)  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public void clear() {
-
+    public void clear()  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Set keySet() {
-        return null;
+    public Set keySet()  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Collection values() {
-        return null;
+    public Collection values()  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Set<Entry> entrySet() {
-        return null;
+    public Set<Entry> entrySet()  {
+        throw new UnsupportedOperationException("Method is not implemented");
     }
 }
