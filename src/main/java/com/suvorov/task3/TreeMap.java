@@ -6,87 +6,79 @@ import java.util.Set;
 
 public class TreeMap<K extends Comparable<K>, V> implements java.util.Map {
 
-    private BinarySearchTree<K, V> tree;
     private int size;
+    private BinarySearchTree<K, V> tree = new BinarySearchTree<>();
 
-
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-
-    public void put(K key, V value) {
-        size++;
-        tree.root = tree.insert(tree.root, key, value);
+    public void add(K key, V value) {
+        tree.add(key, value);
+        ++size;
     }
 
-    public V getVal(K key) {
-        return tree.getByKey(tree.root, key);
+    public void delete(K key, V value) {
+        tree.delete(key);
+        --size;
     }
-
-    public void removeByKey(K key) {
-        size--;
-        tree.root = tree.deletion(tree.root, key);
+    public V getByKey(K key) {
+        return tree.get(key);
     }
-
-
-    public boolean contKey(K key) {
-        return tree.contains(tree.root, key);
-    }
-
-
     @Override
-    public boolean containsKey(Object key)  {
+    public Object put(Object key, Object value) {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public boolean containsValue(Object value)  {
+    public boolean containsKey(Object key) {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Object get(Object key)  {
+    public boolean containsValue(Object value) {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Object put(Object key, Object value)  {
-        throw new UnsupportedOperationException("Method is not implemented");
-    }
-
-    @Override
-    public Object remove(Object key)  {
+    public Object get(Object key) {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
 
     @Override
-    public void putAll(Map m)  {
+    public Object remove(Object key) {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public void clear()  {
+    public void putAll(Map m) {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Set keySet()  {
+    public void clear() {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Collection values()  {
+    public Set keySet() {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 
     @Override
-    public Set<Entry> entrySet()  {
+    public Collection values() {
+        throw new UnsupportedOperationException("Method is not implemented");
+    }
+
+    @Override
+    public Set<Entry> entrySet() {
         throw new UnsupportedOperationException("Method is not implemented");
     }
 }
